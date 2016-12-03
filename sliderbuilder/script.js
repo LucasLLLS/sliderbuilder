@@ -8,6 +8,7 @@ var $ = jQuery;
 */
 
 $(document).ready(function(){
+
     var slider = $('.bxslider').bxSlider();
 
     $('input[name=topico_nome]').keyup(function(){
@@ -19,6 +20,55 @@ $(document).ready(function(){
         e.preventDefault();
         slider.reloadSlider();
                 
+    });
+
+    $(document).on('click', '.rm-button', function(){
+        image = $(this).data('path');
+
+        for(var i = arr_img.length - 1; i >= 0; i--) {
+            if(arr_img[i] === image) {
+               arr_img.splice(i, 1);
+
+            }
+        }
+
+        $(this).parent().remove();
+        $('li[data-path="'+image+'"]').remove();
+        $('#previewSlider').trigger('click');
+
+        $("#topico_imagens").val(arr_img);
+
+    });
+
+    $(document).on('change', '.largura', function(){
+        console.log('qqlr merda aí');
+        var valor = $(this).find('option:selected').val();
+        if(valor == "full"){
+            $('.largura-max').attr('disabled', 'disabled');
+            $('.largura-max').val(0);
+        }
+
+        if(valor == "pixel" || valor=="percent"){
+            $('.largura-max').removeAttr('disabled');
+        }
+
+    });
+
+    $(document).on('change', '.modo', function(){
+        var valor = $(this).find('option:selected').val();
+
+
+    });
+
+    $(document).on('click', '.aplicar-btn', function(){
+
+        if($('.largura-max').val() != 0){
+            config = {
+                slideWidth: $('.largura-max').val();
+            }
+
+            slider.reloadSlider();
+        }
     });
 
 });
@@ -49,15 +99,15 @@ function open_media_uploader_image(){
             var image_caption = json.caption;
             var image_title = json.title;
 
-            $('.topico-banners-preview').append('<img src="'+image_url+'" style="max-width:200px; height:auto;" />');
+            $('.topico-banners-preview').append('<div class="item-preview"><img src="'+image_url+'" /> <button class="rm-button" data-path='+imagePath+'>x</button></div>');
 
             var numSlides = $('.banner-live-preview .bxslider li').length;
 
-                $('.banner-live-preview .bxslider').append('<li>'
+            $('.banner-live-preview .bxslider').append('<li data-path="'+imagePath+'">'
                               +'<img src="'+image_url+'">'
                             +'</li>');
 
-                $('#previewSlider').trigger('click');
+            $('#previewSlider').trigger('click');
 /*            
 
             $('.topico-banners-preview img').each(function(){
@@ -74,56 +124,3 @@ function open_media_uploader_image(){
 
         media_uploader.open();
 }
-
-
-/*function open_media_uploader_image_mobile(){
-    media_uploader_mobile = wp.media({
-        frame:    "post", 
-        state:    "insert", 
-        multiple: false
-    });
-
-    media_uploader_mobile.on("insert", function(){
-        var json = media_uploader_mobile.state().get("selection").first().toJSON();
-
-        var parcialUrl = json.url.split("/");
-
-        var imagePath = parcialUrl[parcialUrl.length - 5] +"/"+parcialUrl[parcialUrl.length - 4] +"/"+parcialUrl[parcialUrl.length - 3] + "/" + parcialUrl[parcialUrl.length - 2] + "/" + json.filename;
-        console.log(imagePath);
-
-        var image_url = json.url;
-        var image_caption = json.caption;
-        var image_title = json.title;
-
-        $('.topico-banners-preview-mobile').append('<img src="'+image_url+'" />');
-
-        var numSlidesmobile = $('.banner-live-mobile-preview .carousel-inner .item.active').length;
-
-        if(numSlidesmobile < 1){
-            $('.banner-live-mobile-preview .carousel-inner').append('<div class="item active">'
-                          +'<img src="'+image_url+'">'
-                        +'</div>');
-            $('.banner-live-mobile-preview .carousel-control').hide();
-
-         }else{
-            $('.banner-live-mobile-preview .carousel-inner').append('<div class="item">'
-                          +'<img src="'+image_url+'">'
-                        +'</div>');
-            $('.banner-live-mobile-preview .carousel-control').show();
-
-         }
-
-        
-
-        /*.banner-live-preview .carousel-inner*/
-/*
-        arr_mobile_img.push(); 
-
-
-        console.log(arr_img);
-        $("#topico_imagens_mobile").val(arr_img);
-
-    });
-
-    media_uploader_mobile.open();
-}*/

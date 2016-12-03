@@ -11,7 +11,7 @@
 
 	if(is_admin() && isset($_GET['page']) && $_GET['page']=="topico"){
 		wp_enqueue_script('topico_banner_plugin', SITE_URL.'/wp-content/plugins/sliderbuilder/script.js', ['jquery']);
-		wp_enqueue_style('topico__banner_style', SITE_URL.'/wp-content/plugins/sliderbuilder/style.css');
+		wp_enqueue_style('topico__banner_style', SITE_URL.'/wp-content/plugins/sliderbuilder/style.css?v=3423');
 		
 		wp_enqueue_style('bootstrap', SITE_URL.'/wp-content/plugins/sliderbuilder/css/bootstrap.min.css');
 		wp_enqueue_script('bootstrapjs', SITE_URL.'/wp-content/plugins/sliderbuilder/js/bootstrap.min.js', ['jquery']);
@@ -37,7 +37,7 @@
 
 		?>
 
-			<div class="wrapper" style="max-width: 900px;">
+			<div class="wrapper col-sm-8">
 
 				<div class="navbar">
 					<ul>
@@ -107,39 +107,35 @@
 							
 						</ul>
 					</div>
-					
 
-					<hr>
-
-<!-- 					<h4>Banner versão Mobile (mesma ordem do desktop)</h4>
-
-<button onclick="open_media_uploader_image_mobile()">Upload</button>
-<div class="topico-banners-previews-mobile"></div> -->
-
-					
-<!-- 					<h4>Preview Mobile</h4>
-
-<div class="banner-live-mobile-preview">
-	<div id="banner-carousel-mobile" class="carousel slide" data-ride="carousel">
-			
-	  <div class="carousel-inner" role="listbox">
-	    
-	  </div>
-
-		
-	  <a class="left carousel-control" href="#banner-carousel-mobile" role="button" data-slide="prev">
-	    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-	    <span class="sr-only">Previous</span>
-	  </a>
-	  <a class="right carousel-control" href="#banner-carousel-mobile" role="button" data-slide="next">
-	    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	    <span class="sr-only">Next</span>
-	  </a>
-	</div>
-</div>
- -->
 
 				<?php endif; ?>
+
+			</div>
+
+			<div class="col-sm-4 estilos-box">
+				<h1>Estilos</h1>
+
+				<label for="largura">
+					<select name="largura" class="largura form-control">
+						<option value="full">Tamanho total</option>
+						<option value="pixel">Tamanho específico em pixels</option>
+						<option value="percent">Tamanho específico em %</option>
+					</select>
+					<br><br>
+					<input type="number" min="300" max="1920" class="form-control largura-max" disabled placeholder="Largura máxima" val="0">
+				</label>
+
+				<label for="modo">
+					<select name="modo" class="modo form-control" >
+						<option value="horizontal">Horizontal</option>
+						<option value="vertical">Vertical</option>
+						<option value="fade">Fade</option>
+					</select>
+				</label>
+
+				<div class="row"></div>
+				<button class="btn btn-default aplicar-btn">Aplicar</button>
 
 			</div>
 			
