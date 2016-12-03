@@ -1,0 +1,15 @@
+Recursos:
+
+- largura do slider
+	-pixels
+	-porcentagem
+	-opção full-width
+	
+- personalização:
+	-horizontal, vertical
+	-modelo
+		slider, carrossel simples, carrossel sem overflow
+	-caption
+		-texto
+		-imagem
+		-animação de entrada

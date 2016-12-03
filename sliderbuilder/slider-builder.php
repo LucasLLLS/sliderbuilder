@@ -1,6 +1,6 @@
 <?php
 	/*
-	Plugin Name: Topico - Slider
+	Plugin Name: Slider Builder
 	*/
 
 	if(isset($_POST['salvar_banner'])){
@@ -10,12 +10,15 @@
 	define('SITE_URL', get_site_url());
 
 	if(is_admin() && isset($_GET['page']) && $_GET['page']=="topico"){
-		wp_enqueue_script('topico_banner_plugin', SITE_URL.'/wp-content/plugins/topico/script.js', ['jquery']);
-		wp_enqueue_style('topico__banner_style', SITE_URL.'/wp-content/plugins/topico/style.css');
+		wp_enqueue_script('topico_banner_plugin', SITE_URL.'/wp-content/plugins/sliderbuilder/script.js', ['jquery']);
+		wp_enqueue_style('topico__banner_style', SITE_URL.'/wp-content/plugins/sliderbuilder/style.css');
 		
-		wp_enqueue_style('bootstrap', SITE_URL.'/wp-content/plugins/topico/css/bootstrap.min.css');
-		wp_enqueue_script('bootstrapjs', SITE_URL.'/wp-content/plugins/topico/js/bootstrap.min.js', ['jquery']);
+		wp_enqueue_style('bootstrap', SITE_URL.'/wp-content/plugins/sliderbuilder/css/bootstrap.min.css');
+		wp_enqueue_script('bootstrapjs', SITE_URL.'/wp-content/plugins/sliderbuilder/js/bootstrap.min.js', ['jquery']);
 	}
+
+	wp_enqueue_style('bxslider', SITE_URL.'/wp-content/plugins/sliderbuilder/css/jquery.bxslider.css');
+	wp_enqueue_script('bxslider', SITE_URL.'/wp-content/plugins/sliderbuilder/js/jquery.bxslider.min.js', ['jquery']);
 
 
 	defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
@@ -92,24 +95,17 @@
 					<button class="btn btn-default" onclick="open_media_uploader_image()">Add Imagem</button>
 					<div class="topico-banners-preview"></div>
 
+					<button id="previewSlider">
+						Prever
+					</button>
+
 					<h4>Preview</h4>
+
+
 					<div class="banner-live-preview">
-						<div id="banner-carousel" class="carousel slide" data-ride="carousel">
-
-						  <div class="carousel-inner" role="listbox">
-						    
-						  </div>
-
-
-						  <a class="left carousel-control" href="#banner-carousel" role="button" data-slide="prev">
-						    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						    <span class="sr-only">Previous</span>
-						  </a>
-						  <a class="right carousel-control" href="#banner-carousel" role="button" data-slide="next">
-						    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						    <span class="sr-only">Next</span>
-						  </a>
-						</div>
+						<ul class="bxslider">
+							
+						</ul>
 					</div>
 					
 
@@ -156,8 +152,8 @@
 		db_init();
 		
 		add_menu_page( 
-			 'Tópico - Banner da Home'
-			,'Tópico - Banner da Home'
+			 'Slider Builder'
+			,'Slider Builder'
 			,'manage_options'
 			,'topico'
 			,'topico_start'
@@ -186,49 +182,25 @@
 
 		?>
 
-		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-		  <!-- Indicators -->
-
-
-		  <!-- Wrapper for slides -->
-		  <div class="carousel-inner" role="listbox">
+		<ul class="bxslider">
 
 
 		<?php
-			$conta = 1;
 			foreach ($slides as $s) {
 
-					if($conta==1){
-						echo '<div class="item active">
+						echo '<li>
 							      <img src="'.SITE_URL."/".$s.'" alt="">
-							    </div>
-							    <div class="carousel-caption">
-							        <button class="full-width orange-button big-button middle tel-banner-btn telefonamos" data-toggle="modal" data-target="#ligamosModal">Telefonamos para você</button>
-							    </div>';	
-					}else{
-						echo '<div class="item">
-							      <img src="'.SITE_URL."/".$s.'" alt="">
-							   </div>';
-					}
-
-					$conta++;
+							   </li>';	
 				}
 		?>   
 
-		  </div>
+		</ul>
 
-		<?php if(count($slides)>1): ?>
-		  <!-- Controls -->
-		  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-		    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-		    <span class="sr-only">Previous</span>
-		  </a>
-		  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-		    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-		    <span class="sr-only">Next</span>
-		  </a>
-		<?php endif; ?>
-		</div>
+		<script>
+		jQuery(document).ready(function(){
+			jQuery('.bxslider').bxSlider();
+		});
+		</script>
 
 		<?php	
 }

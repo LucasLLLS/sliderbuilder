@@ -1,18 +1,34 @@
 var media_uploader = null;
 var arr_img = [];
+var $ = jQuery;
 /*pathArray = location.href.split( '/' );
     protocol = pathArray[0];
     host = pathArray[2];
     url = protocol + '//' + host;
 */
 
-jQuery(document).ready(function(){
-    jQuery('input[name=topico_nome]').keyup(function(){
-        jQuery('.short').text(jQuery(this).val());
+$(document).ready(function(){
+    var slider = $('.bxslider').bxSlider();
+
+    $('input[name=topico_nome]').keyup(function(){
+        $('.short').text($(this).val());
     });
+
+    $('#previewSlider').click(function(e){
+
+        e.preventDefault();
+        slider.reloadSlider();
+                
+    });
+
 });
 
+
+
+
+
 function open_media_uploader_image(){
+        
         media_uploader = wp.media({
             frame:    "post", 
             state:    "insert", 
@@ -33,35 +49,26 @@ function open_media_uploader_image(){
             var image_caption = json.caption;
             var image_title = json.title;
 
-            jQuery('.topico-banners-preview').append('<img src="'+image_url+'" style="max-width:200px; height:auto;" />');
+            $('.topico-banners-preview').append('<img src="'+image_url+'" style="max-width:200px; height:auto;" />');
 
-            var numSlides = jQuery('.banner-live-preview .carousel-inner .item.active').length;
+            var numSlides = $('.banner-live-preview .bxslider li').length;
 
-            if(numSlides < 1){
-                jQuery('.banner-live-preview .carousel-inner').append('<div class="item active">'
+                $('.banner-live-preview .bxslider').append('<li>'
                               +'<img src="'+image_url+'">'
-                            +'</div>');
-                jQuery('.banner-live-preview .carousel-control').hide();
+                            +'</li>');
 
-             }else{
-                jQuery('.banner-live-preview .carousel-inner').append('<div class="item">'
-                              +'<img src="'+image_url+'">'
-                            +'</div>');
-                jQuery('.banner-live-preview .carousel-control').show();
-
-             }  
-
+                $('#previewSlider').trigger('click');
 /*            
 
-            jQuery('.topico-banners-preview img').each(function(){
-                arr_img.push(jQuery(this).attr('src')); 
+            $('.topico-banners-preview img').each(function(){
+                arr_img.push($(this).attr('src')); 
             });*/
 
             arr_img.push(imagePath);
 
             console.log(arr_img);
 
-            jQuery("#topico_imagens").val(arr_img);
+            $("#topico_imagens").val(arr_img);
 
         });
 
@@ -88,21 +95,21 @@ function open_media_uploader_image(){
         var image_caption = json.caption;
         var image_title = json.title;
 
-        jQuery('.topico-banners-preview-mobile').append('<img src="'+image_url+'" />');
+        $('.topico-banners-preview-mobile').append('<img src="'+image_url+'" />');
 
-        var numSlidesmobile = jQuery('.banner-live-mobile-preview .carousel-inner .item.active').length;
+        var numSlidesmobile = $('.banner-live-mobile-preview .carousel-inner .item.active').length;
 
         if(numSlidesmobile < 1){
-            jQuery('.banner-live-mobile-preview .carousel-inner').append('<div class="item active">'
+            $('.banner-live-mobile-preview .carousel-inner').append('<div class="item active">'
                           +'<img src="'+image_url+'">'
                         +'</div>');
-            jQuery('.banner-live-mobile-preview .carousel-control').hide();
+            $('.banner-live-mobile-preview .carousel-control').hide();
 
          }else{
-            jQuery('.banner-live-mobile-preview .carousel-inner').append('<div class="item">'
+            $('.banner-live-mobile-preview .carousel-inner').append('<div class="item">'
                           +'<img src="'+image_url+'">'
                         +'</div>');
-            jQuery('.banner-live-mobile-preview .carousel-control').show();
+            $('.banner-live-mobile-preview .carousel-control').show();
 
          }
 
@@ -114,7 +121,7 @@ function open_media_uploader_image(){
 
 
         console.log(arr_img);
-        jQuery("#topico_imagens_mobile").val(arr_img);
+        $("#topico_imagens_mobile").val(arr_img);
 
     });
 
