@@ -54,23 +54,6 @@ $(document).ready(function(){
 
     });
 
-    $(document).on('change', '.modo', function(){
-        var valor = $(this).find('option:selected').val();
-
-
-    });
-
-    $(document).on('click', '.aplicar-btn', function(){
-
-        if($('.largura-max').val() != 0){
-            config = {
-                slideWidth: $('.largura-max').val();
-            }
-
-            slider.reloadSlider();
-        }
-    });
-
 });
 
 
